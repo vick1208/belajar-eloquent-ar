@@ -2,7 +2,9 @@
 
 use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +24,8 @@ Route::get('/categories', function(){
 Route::get('/categories-cust', function(){
     $categories = Category::all();
     return new CategoryCollection($categories);
+});
+Route::get('/products/{id}', function($id){
+    $product = Product::find($id);
+    return new ProductResource($product);
 });

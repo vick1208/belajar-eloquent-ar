@@ -25,10 +25,11 @@ class ProductResource extends JsonResource
         return array(
             "id" => $this->id,
             "name" => $this->name,
-            "category" => new CategorySimplifiedResource($this->category),
+            "category" => new CategorySimplifiedResource($this->whenLoaded("category")),
             "price" => $this->price,
+            "is_expensive" => $this->when($this->price > 1000, true, false),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-        ) ;
+        );
     }
 }

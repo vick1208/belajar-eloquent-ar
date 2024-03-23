@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
             for ($i=0; $i < 5; $i++) {
                 $category->products()->create([
                     "name" => "product $i of $category->name",
-                    "price" => rand(100,1000)
+                    "price" => rand(100,10000)
                 ]);
             }
         });

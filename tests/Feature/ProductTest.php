@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 use function PHPUnit\Framework\assertContains;
+use function PHPUnit\Framework\assertNotNull;
 
 class ProductTest extends TestCase
 {
@@ -34,16 +35,24 @@ class ProductTest extends TestCase
 
     public function testColWrap()
     {
-        $this->seed([CategorySeeder::class,ProductSeeder::class]);
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
         $response = $this->get('/api/products')->assertStatus(200);
         $names = $response->json("data.*.name");
 
-        for ($i=0; $i < 5; $i++) {
-            assertContains("product $i of Food",$names);
+        for ($i = 0; $i < 5; $i++) {
+            assertContains("product $i of Food", $names);
         }
-        for ($i=0; $i < 5; $i++) {
-            assertContains("product $i of Travel",$names);
+        for ($i = 0; $i < 5; $i++) {
+            assertContains("product $i of Travel", $names);
         }
+    }
 
+    public function testProductPaging()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+        $response = $this->get('/api/products-paging')->assertStatus(200);
+        assertNotNull($response->json("links"));
+        assertNotNull($response->json("meta"));
+        assertNotNull($response->json("data"));
     }
 }

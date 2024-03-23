@@ -30,7 +30,7 @@ Route::get('/categories-cust', function () {
 Route::get('/products/{id}', function ($id) {
     $product = Product::find($id);
     $product->load("category");
-    return new ProductResource($product);
+    return (new ProductResource($product))->response()->header("X-Powered-By","Programmer Bawang Putih");
 });
 Route::get('/products', function () {
     $products = Product::with('category')->get();
